@@ -1,0 +1,89 @@
+[package]
+name = 'treasury'
+version = '0.0.1'
+description = 'Pallet which holds the pot and is not connected to any specific account, rather to the pallet itself.'
+authors = ['Raghuvar Vijayakumar']
+edition = '2021'
+license = 'Unlicense'
+publish = false
+
+[package.metadata.docs.rs]
+targets = ['x86_64-unknown-linux-gnu']
+
+[dependencies.primitives]
+default-features = false
+path = '../../primitives'
+version = '0.0.1'
+
+[dependencies.codec]
+default-features = false
+features = ['derive']
+package = 'parity-scale-codec'
+version = '2.0.0'
+
+[dependencies.frame-benchmarking]
+default-features = false
+git = 'https://github.com/paritytech/substrate.git'
+optional = true
+tag = 'monthly-2021-11-1'
+version = '4.0.0-dev'
+
+[dependencies.frame-support]
+default-features = false
+git = 'https://github.com/paritytech/substrate.git'
+tag = 'monthly-2021-11-1'
+version = '4.0.0-dev'
+
+[dependencies.frame-system]
+default-features = false
+git = 'https://github.com/paritytech/substrate.git'
+tag = 'monthly-2021-11-1'
+version = '4.0.0-dev'
+
+[dependencies.scale-info]
+default-features = false
+features = ['derive']
+version = '1.0'
+
+[dev-dependencies.sp-core]
+default-features = false
+git = 'https://github.com/paritytech/substrate.git'
+tag = 'monthly-2021-11-1'
+version = '4.0.0-dev'
+
+[dev-dependencies.sp-io]
+default-features = false
+git = 'https://github.com/paritytech/substrate.git'
+tag = 'monthly-2021-11-1'
+version = '4.0.0-dev'
+
+[dev-dependencies.sp-runtime]
+default-features = false
+git = 'https://github.com/paritytech/substrate.git'
+tag = 'monthly-2021-11-1'
+version = '4.0.0-dev'
+
+[dependencies.sp-std]
+default-features = false
+git = 'https://github.com/paritytech/substrate.git'
+tag = 'monthly-2021-11-1'
+version = '4.0.0-dev'
+
+[dependencies.pallet-memes]
+default-features = false
+path = '../template'
+version = '0.0.1'
+
+
+[features]
+default = ['std']
+runtime-benchmarks = ['frame-benchmarking']
+std = [
+    'codec/std',
+    'scale-info/std',
+    'frame-support/std',
+    'frame-system/std',
+    'frame-benchmarking/std',
+	'pallet-memes/std',
+]
+try-runtime = ['frame-support/try-runtime']
