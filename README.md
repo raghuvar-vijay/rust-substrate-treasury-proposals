@@ -1,21 +1,57 @@
-# Substrate Node Template
+# substrate-meme-treasury
 
 [![Try on playground](https://img.shields.io/badge/Playground-Node_Template-brightgreen?logo=Parity%20Substrate)](https://docs.substrate.io/playground/) [![Matrix](https://img.shields.io/matrix/substrate-technical:matrix.org)](https://matrix.to/#/#substrate-technical:matrix.org)
 
-A fresh FRAME-based [Substrate](https://www.substrate.io/) node, ready for hacking :rocket:
+## Project Details
+The aim of the project is to make a substrate node with a functioning name storage system,
+where users can store their names and their meme names on-chain and eventually use treasury
+pallet methods to choose good proposals.
 
-## Getting Started
+![Alt text](docs/images/system_overview.png)
 
-Follow the steps below to get started with the Node Template, or get it up and running right from
-your browser in just a few clicks using
-the [Substrate Playground](https://docs.substrate.io/playground/) :hammer_and_wrench:
+Firstly, all the required features and entities required for the project is laid out. Then a system
+overview is drafted using draw.io. Two custom pallets are decided for this project: Meme-pallet
+and treasury pallet. Meme-pallet contains the functions to insert new memes along with the
+user names on to the storage and emits a successful event.
 
-### Using Nix
+![Alt text](docs/images/data_architecture.png)
 
-Install [nix](https://nixos.org/) and optionally [direnv](https://github.com/direnv/direnv) and
-[lorri](https://github.com/target/lorri) for a fully plug and play experience for setting up the
-development environment. To get all the correct dependencies activate direnv `direnv allow` and
-lorri `lorri shell`.
+Secondly, the data architecture is formulated to list of the storage items for storing names and
+proposals. 
+
+A separate module is created called primitives, which holds the structs for meme-
+pallet and treasury pallet.
+
+The meme-pallet stores the users info about the meme. The treasury pallet is built a default
+account Odyssey1, which acts as a pot. 
+
+Only the root user can access the pot in this scenario
+(This can be extended further such that a consensus protocol using collective pallet governs the
+pot). 
+
+Any user can donate to the pot. And after the meme is inserted in the meme-pallet, users
+can send in their proposals for the memes they like.
+
+In this implementation, only one meme can be inserted per user account (This can be further
+developed such that a single account can insert multiple memes and is assigned a unique value
+to address the meme with the user). 
+
+The propose spend function gives the user to propose a
+value for the corresponding meme of the user to be selected for allocating the pot value. 
+
+The
+propose value function also needs a bond value, which reserves a value from the user until the
+proposal is accepted. 
+
+Then the bond amount is also reverted back to the user who proposed
+the meme (This functionality can be further extended by adding the pallet-collective so that the
+best meme is selected by a consensus).
+
+Lastly, the allocate function which can be accessed by the sudo account allocates the funds the
+approved meme by passing the winning proposal index in the function argument. 
+
+The bond
+amount is reverted back to the account who proposed the meme.
 
 ### Rust Setup
 
